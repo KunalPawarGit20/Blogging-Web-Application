@@ -1,4 +1,4 @@
-# Flask Blog Capstone
+# Flask Blog Web Application
 
 A Flask blog with registration, login, posts, comments, CKEditor, Bootstrap, CSRF protection, and email contact support.
 
