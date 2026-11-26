@@ -7,6 +7,7 @@ from flask_ckeditor import CKEditor
 from forms import RegisterForm, BlogForm, LoginForm, CommentsForm, DeletePostForm, ContactForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, LoginManager, current_user, login_user, logout_user, login_required
+from flask_wtf.csrf import generate_csrf
 from typing import List
 from dotenv import load_dotenv
 from markupsafe import Markup
@@ -312,6 +313,7 @@ def sanitize_html(value):
 app.jinja_env.filters['sanitize'] = sanitize_html
 app.jinja_env.globals['is_admin'] = is_admin
 app.jinja_env.globals['can_manage_post'] = can_manage_post
+app.jinja_env.globals['csrf_token'] = generate_csrf
 
 if __name__ == "__main__":
     app.run(debug=False, port=5003)
