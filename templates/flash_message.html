@@ -4,8 +4,7 @@
           <div id="flash-message-container" class="row justify-content-center">
               <div class="col-sm-8">
                   {% for category, message in messages %}
-                      {% set alert_class = 'alert-' + (category if category in ['success', 'error', 'warning', 'info'] else 'info') %}
-
+                      {% set alert_class = 'alert-' + ('danger' if category == 'error' else category) %}
                       <div class="alert {{ alert_class }} alert-dismissible fade show" role="alert">
                           {{ message }}
                       </div>
@@ -19,16 +18,13 @@
 {% block content %}{% endblock %}
 
 <script>
-    // Targets all elements with the class 'alert'
-    let alerts = document.querySelectorAll('.alert');
-
-    // Time in milliseconds before the alert disappears (e.g., 5000ms = 5 seconds)
-    const fadeOutTime = 2000;
-
-    alerts.forEach(function(alert) {
+    document.querySelectorAll('.alert').forEach(function(alert) {
         setTimeout(function() {
-            // Closes the alert programmatically using Bootstrap's JS API
-            bootstrap.Alert.getOrCreateInstance(alert).close();
-        }, fadeOutTime);
+            if (window.bootstrap && bootstrap.Alert) {
+                bootstrap.Alert.getOrCreateInstance(alert).close();
+            } else {
+                alert.remove();
+            }
+        }, 2000);
     });
 </script>
